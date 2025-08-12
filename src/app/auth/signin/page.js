@@ -1,62 +1,72 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { useState } from "react";
+import { signIn, getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function SignIn() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-      const result = await signIn('credentials', {
+      const result = await signIn("credentials", {
         email,
         password,
-        redirect: false
-      })
+        redirect: false,
+      });
 
       if (result?.error) {
-        setError('Invalid credentials')
+        setError("Invalid credentials");
       } else {
-        router.push('/dashboard')
+        router.push("/dashboard");
       }
     } catch (error) {
-      setError('Something went wrong')
+      setError("Something went wrong");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-950 dark:via-gray-900 dark:to-indigo-950 relative overflow-hidden">
       {/* Animated background */}
       <div className="absolute inset-0 opacity-30 dark:opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl animate-pulse" style={{ animationDelay: '0s' }}></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div
+          className="absolute top-1/4 left-1/4 w-48 h-48 bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl animate-pulse"
+          style={{ animationDelay: "0s" }}
+        ></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
-      
+
       <div className="w-full max-w-md relative z-10">
         <div className="glass dark:glass-dark rounded-3xl shadow-2xl ring-1 ring-gray-200/60 dark:ring-gray-700/60 p-8 animate-scale-in">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               Welcome Back
             </h2>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">Sign in to continue to Minty List</p>
+            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+              Sign in to continue to Minty List
+            </p>
           </div>
-          
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Email
+                </label>
                 <input
                   type="email"
                   required
@@ -67,7 +77,9 @@ export default function SignIn() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Password
+                </label>
                 <input
                   type="password"
                   required
@@ -96,13 +108,16 @@ export default function SignIn() {
                   Signing in...
                 </>
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
 
             <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-              Don't have an account?{' '}
-              <Link href="/auth/signup" className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors">
+              {"Don't have an account?"}{" "}
+              <Link
+                href="/auth/signup"
+                className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors"
+              >
                 Sign up
               </Link>
             </div>
@@ -110,5 +125,5 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-  )
+  );
 }
